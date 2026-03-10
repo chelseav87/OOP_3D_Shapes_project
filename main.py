@@ -1,8 +1,4 @@
-from shapes import Shapes3D, Pyramid
+from shapes import Shapes3D, SquarePyramid
 
-egg = Shapes3D("circle", "red")
-print(f"volume {egg.volume()}, surface area {egg.surface_area()}")
-print(f"{egg.getColour()} {egg.getType()}")
-egg.setType("square")
-egg.setColour("blue")
-print(f"{egg.getColour()} {egg.getType()}")
+egg = Shapes3D("some type", "some colour", [1, 2 , 3])
+print(f"volume {egg.volume()}, surface area {egg.surface_area()}, {egg.getColour()} {egg.getType()}")
