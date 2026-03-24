@@ -22,6 +22,12 @@ class Shapes3D:
     def setColour(self, new_colour):
         self.__shape_colour = new_colour
 
+    def getLocation(self):
+        return self.__shape_location
+
+    def setLocation(self, new_location):
+        self.__shape_location = new_location
+
 class SquarePyramid(Shapes3D):
     def __init__(self, colour, location, base_length, height):
         super().__init__("Square-based Pyramid", colour, location)
