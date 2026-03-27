@@ -22,12 +22,6 @@ class Shapes3D:
     def getType(self):
         return self.__shape_type
 
-    def setColour(self, new_colour):
-        self.__shape_colour = new_colour
-
-    def setLocation(self, new_location):
-        self.__shape_location = new_location
-
 class SquarePyramid(Shapes3D):
     def __init__(self, colour, location, base_length, height):
         super().__init__("Square-based Pyramid", colour, location)
@@ -106,7 +100,7 @@ class SquarePyramid(Shapes3D):
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         pygame.quit()
-                        quit()
+                        return
                 glRotatef(1, 1, 1, 100)
                 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
                 draw_pyramid()
@@ -171,7 +165,7 @@ class Icosahedron(Shapes3D):
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         pygame.quit()
-                        quit()
+                        return
                 glRotatef(1, 1, 1, 100)
                 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
                 draw_icosahedron()

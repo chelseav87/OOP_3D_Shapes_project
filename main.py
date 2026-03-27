@@ -1,16 +1,10 @@
 from shapes import SquarePyramid, Icosahedron
 import tkinter as tk
 
-pyramid = SquarePyramid([1,1,1], [0,0,0], 1, 1)
-ico = Icosahedron([1,1,1], [0,0,0], 1)
-
-def rgb_to_hex(rgb):
-    return "#%02x%02x%02x" % rgb
-
 # --- Input Window --- #
 root = tk.Tk()
 root.title("3D Shapes App")
-root.geometry("340x280")
+root.geometry("300x280")
 root.resizable(width=False, height=False)
 
 # Dropdown of 3D Shapes
@@ -61,60 +55,80 @@ def dimensions():
     if selected_shape == "Square-based Pyramid":
         dimension_1.set("Base Length:")
         dimension_2.set("Height:")
-        dimension_entry_1.place(x=220,y=133)
-        dimension_entry_2.place(x=220,y=163)
+        dimension_entry_1.place(x=195,y=133)
+        dimension_entry_2.place(x=195,y=163)
 
     elif selected_shape == "Icosahedron":
         dimension_1.set("Side Length:")
         dimension_2.set("")
-        dimension_entry_1.place(x=220,y=133)
+        dimension_entry_1.place(x=195,y=133)
         dimension_entry_2.place_forget()
 
     else:
-        dimension_1.set("Please choose a shape!")
+        dimension_1.set("Please choose a 3D shape type!")
         dimension_2.set("")
 
 dimension_1 = tk.StringVar()
 dimension_lbl_1 = tk.Label(root,textvariable=dimension_1)
-dimension_lbl_1.place(x=140, y=133)
-dimension_entry_1 = tk.Entry(root,width=10)
+dimension_lbl_1.place(x=120, y=133)
+dimension_entry_1 = tk.Entry(root,width=15)
 dimension_entry_1.place_forget()
 
 dimension_2 = tk.StringVar()
 dimension_lbl_2 = tk.Label(root,textvariable=dimension_2)
-dimension_lbl_2.place(x=140, y=163)
-dimension_entry_2 = tk.Entry(root,width=10)
+dimension_lbl_2.place(x=120, y=163)
+dimension_entry_2 = tk.Entry(root,width=15)
 dimension_entry_2.place_forget()
 
-tk.Button(root,text="Refresh Dimensions",command=dimensions).place(x=10,y=130)
+tk.Button(root,text="Input Dimensions",command=dimensions).place(x=10,y=130)
 
-# Instantiation & Visualization
+# Shape Creation
 def check_values():
-    pass
+    try:
+        r = int(red_entry.get().strip())
+        g = int(green_entry.get().strip())
+        b = int(blue_entry.get().strip())
+        if r > 255 or r < 0 or g > 255 or g < 0 or b > 255 or b < 0:
+            output.set("Please check your RGB values!")
+        else:
+            rgb = [r,g,b]
+            try:
+                x = int(x_entry.get().strip())
+                y = int(y_entry.get().strip())
+                z = int(z_entry.get().strip())
+                if not x or not y or not z:
+                    output.set("Please check your location values!")
+                else:
+                    location = [x,y,z]
+                    selected_shape = shape_prompt.get()
+                    if selected_shape == "Square-based Pyramid":
+                        pyramid(rgb,location)
+                    elif selected_shape == "Icosahedron":
+                        icosahedron(rgb,location)
+                    else:
+                        output.set("Please choose a 3D shape type!")
+            except ValueError:
+                output.set("Please check your location values!")
+    except ValueError:
+        output.set("Please check your RGB values!")
 
-def instantiate():
-    pass
+def pyramid(rgb,location):
+    pyr = SquarePyramid([1, 1, 1], [0, 0, 0], 1, 1)
+    output.set(f"{pyr.getType()}\nVolume: {pyr.volume():.2f} units cubed\nSurface Area: {pyr.surface_area():.2f} units squared")
+    output_lbl.place(x=105,y=200)
+    pyr.draw()
 
-def visualize():
-    selected_shape = shape_prompt.get()
-
-    if selected_shape == "Square-based Pyramid":
-        pyramid.draw()
-        output.set("")
-
-    elif selected_shape == "Icosahedron":
-        ico.draw()
-        output.set("")
-
-    else:
-        output.set("Please choose a shape!")
+def icosahedron(rgb, location):
+    ico = Icosahedron([1, 1, 1], [0, 0, 0], 1)
+    output.set(f"{ico.getType()}\nVolume: {ico.volume():.2f} units cubed\nSurface Area: {ico.surface_area():.2f} units squared")
+    output_lbl.place(x=105,y=200)
+    ico.draw()
 
 output = tk.StringVar()
 output_lbl = tk.Label(root,textvariable=output)
-output_lbl.place(x=10,y=235)
+output_lbl.place(x=105,y=204)
 output.set("")
 
-tk.Button(root,text="Create a Shape",command=instantiate).place(x=10,y=200)
-tk.Button(root,text="Visualize",command=visualize).place(x=110,y=200)
+tk.Button(root,text="Create Shape",command=check_values).place(x=10,y=200)
 
 root.mainloop()
