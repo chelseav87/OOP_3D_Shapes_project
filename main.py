@@ -94,9 +94,9 @@ def check_values():
         else:
             rgb = [r,g,b]
             try:
-                x = int(x_entry.get().strip())
-                y = int(y_entry.get().strip())
-                z = int(z_entry.get().strip())
+                x = float(x_entry.get().strip())
+                y = float(y_entry.get().strip())
+                z = float(z_entry.get().strip())
                 coord = [x,y,z]
                 selected_shape = shape_prompt.get()
                 if selected_shape == "Square-based Pyramid":
@@ -114,26 +114,26 @@ def check_values():
 
 def create_pyramid(rgb,coord):
     try:
-        b = int(dimension_entry_1.get().strip())
-        h = int(dimension_entry_2.get().strip())
+        b = float(dimension_entry_1.get().strip())
+        h = float(dimension_entry_2.get().strip())
         pyr = SquarePyramid(rgb, coord, b, h)
         output.set(f"{pyr.getType()}\nVolume: {pyr.volume():.2f} units cubed\nSurface Area: {pyr.surface_area():.2f} units squared")
         output_lbl.place(x=53,y=235)
-        pyr.draw()
+        pyr.draw(rgb)
     except ValueError:
         output_lbl.place(x=85, y=250)
         output.set("Invalid dimensions.")
 
 def create_icosahedron(rgb, coord):
     try:
-        s = int(dimension_entry_1.get().strip())
+        s = float(dimension_entry_1.get().strip())
         if not s:
             output.set("Invalid dimensions.")
         else:
             ico = Icosahedron(rgb, coord, s)
             output.set(f"{ico.getType()}\nVolume: {ico.volume():.2f} units cubed\nSurface Area: {ico.surface_area():.2f} units squared")
             output_lbl.place(x=53,y=235)
-            ico.draw()
+            ico.draw(rgb)
     except ValueError:
         output_lbl.place(x=85, y=250)
         output.set("Invalid dimensions.")

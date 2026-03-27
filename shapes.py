@@ -16,7 +16,7 @@ class Shapes3D:
     def surface_area(self):
         return None
 
-    def draw(self):
+    def draw(self, colour, location):
         return None
 
     def getType(self):
@@ -25,8 +25,8 @@ class Shapes3D:
 class SquarePyramid(Shapes3D):
     def __init__(self, colour, location, base_length, height):
         super().__init__("Square-based Pyramid", colour, location)
-        self.__base_length = base_length
-        self.__height = height
+        self.__base_length = float(base_length)
+        self.__height = float(height)
 
     def volume(self):
         return 1/3 * self.__base_length ** 2 * self.__height
@@ -34,7 +34,7 @@ class SquarePyramid(Shapes3D):
     def surface_area(self):
         return self.__base_length ** 2 + 2 * self.__base_length * (self.__base_length ** 2 / 4 + self.__height ** 2) ** 0.5
 
-    def draw(self, colour):
+    def draw(self, colour, location):
         vertices = [(0, 0, self.__height),
                     (self.__base_length, self.__base_length, -self.__height),
                     (self.__base_length, -self.__base_length, -self.__height),
@@ -47,7 +47,7 @@ class SquarePyramid(Shapes3D):
                  (0, 4, 1)]  # back side
 
         def draw_pyramid():
-            glColor3f(colour[0], colour[1], colour[2])
+            glColor3f(colour[0]/255, colour[1]/255, colour[2]/255)
 
             glBegin(GL_QUADS)
             glNormal3f(0, 0, -1)
@@ -111,7 +111,7 @@ class SquarePyramid(Shapes3D):
 class Icosahedron(Shapes3D):
     def __init__(self, colour, location, side_length):
         super().__init__("Icosahedron", colour, location)
-        self.__side_length = side_length
+        self.__side_length = float(side_length)
 
     def volume(self):
         return (5 * (3 + 5 ** 0.5))/12 * self.__side_length ** 3
@@ -119,7 +119,7 @@ class Icosahedron(Shapes3D):
     def surface_area(self):
         return 5 * 3 ** 0.5 * self.__side_length ** 2
 
-    def draw(self):
+    def draw(self, colour, location):
         phi = (1 + 5 ** 0.5) / 2
         vertices = [(phi, 0, -1), (phi, 0, 1), (-phi, 0, -1), (-phi, 0, 1),
                     (-1, phi, 0), (1, phi, 0), (-1, -phi, 0), (1, -phi, 0),
@@ -130,7 +130,7 @@ class Icosahedron(Shapes3D):
                  (4, 9, 5), (2, 4, 11), (6, 2, 10), (8, 6, 7), (9, 8, 1)]
 
         def draw_icosahedron():
-            glColor3f(1, 1, 1)
+            glColor3f(colour[0]/255, colour[1]/255, colour[2]/255)
             glBegin(GL_TRIANGLES)
             for face in faces:
                 v1 = np.array(vertices[face[0]])
