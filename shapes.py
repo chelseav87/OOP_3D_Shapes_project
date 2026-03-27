@@ -22,14 +22,8 @@ class Shapes3D:
     def getType(self):
         return self.__shape_type
 
-    def getColour(self):
-        return self.__shape_colour
-
     def setColour(self, new_colour):
         self.__shape_colour = new_colour
-
-    def getLocation(self):
-        return self.__shape_location
 
     def setLocation(self, new_location):
         self.__shape_location = new_location
@@ -47,7 +41,11 @@ class SquarePyramid(Shapes3D):
         return self.__base_length ** 2 + 2 * self.__base_length * (self.__base_length ** 2 / 4 + self.__height ** 2) ** 0.5
 
     def draw(self):
-        vertices = [(0, 0, 1), (1, 1, -1), (1, -1, -1), (-1, -1, -1), (-1, 1, -1)]
+        vertices = [(0, 0, self.__height),
+                    (self.__base_length, self.__base_length, -self.__height),
+                    (self.__base_length, -self.__base_length, -self.__height),
+                    (-self.__base_length, -self.__base_length, -self.__height),
+                    (-self.__base_length, self.__base_length, -self.__height)]
         faces = [(1, 2, 3, 4),  # base
                  (0, 1, 2),  # right side
                  (0, 2, 3),  # front side
@@ -60,31 +58,31 @@ class SquarePyramid(Shapes3D):
             glBegin(GL_QUADS)
             glNormal3f(0, 0, -1)
             for vertex in faces[0]:
-                glVertex3iv(vertices[vertex])
+                glVertex3fv(vertices[vertex])
             glEnd()
 
             glBegin(GL_TRIANGLES)
             glNormal3f(0, 1, 1)
             for vertex in faces[1]:
-                glVertex3iv(vertices[vertex])
+                glVertex3fv(vertices[vertex])
             glEnd()
 
             glBegin(GL_TRIANGLES)
             glNormal3f(1, 0, 1)
             for vertex in faces[2]:
-                glVertex3iv(vertices[vertex])
+                glVertex3fv(vertices[vertex])
             glEnd()
 
             glBegin(GL_TRIANGLES)
             glNormal3f(0, -1, 1)
             for vertex in faces[3]:
-                glVertex3iv(vertices[vertex])
+                glVertex3fv(vertices[vertex])
             glEnd()
 
             glBegin(GL_TRIANGLES)
             glNormal3f(-1, 0, 1)
             for vertex in faces[4]:
-                glVertex3iv(vertices[vertex])
+                glVertex3fv(vertices[vertex])
             glEnd()
 
         def visual():
@@ -100,8 +98,8 @@ class SquarePyramid(Shapes3D):
             glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE)
             glLightfv(GL_LIGHT0, GL_POSITION, (1, 1, 1, 1))
 
-            gluPerspective(50, display[0] / display[1], 1, 10)
-            glTranslatef(0.0, 0.0, -5)
+            gluPerspective(55, display[0] / display[1], 1, 10)
+            glTranslatef(0.0, 0.0, -4)
             glRotatef(270, 1, 0, 0)
 
             while True:
@@ -165,8 +163,9 @@ class Icosahedron(Shapes3D):
             glLightfv(GL_LIGHT0, GL_POSITION, (1, 1, 0, 1))
 
             gluPerspective(50, display[0] / display[1], 1, 10)
-            glTranslatef(0.0, 0.0, -7)
+            glTranslatef(0.0, 0.0, -5)
             glRotatef(120, 1, 0, 0)
+            glScalef(self.__side_length, self.__side_length, self.__side_length)
 
             while True:
                 for event in pygame.event.get():
