@@ -4,7 +4,7 @@ import tkinter as tk
 # --- Input Window --- #
 root = tk.Tk()
 root.title("3D Shapes App")
-root.geometry("300x280")
+root.geometry("280x300")
 root.resizable(width=False, height=False)
 
 # Dropdown of 3D Shapes
@@ -49,19 +49,19 @@ z_entry = tk.Entry(root,width=4)
 z_entry.place(x=225,y=81)
 
 # Shape Dimensions
-def dimensions():
+def dimensions(*args):
     selected_shape = shape_prompt.get()
 
     if selected_shape == "Square-based Pyramid":
         dimension_1.set("Base Length:")
         dimension_2.set("Height:")
-        dimension_entry_1.place(x=195,y=133)
-        dimension_entry_2.place(x=195,y=163)
+        dimension_entry_1.place(x=90,y=120)
+        dimension_entry_2.place(x=90,y=150)
 
     elif selected_shape == "Icosahedron":
         dimension_1.set("Side Length:")
         dimension_2.set("")
-        dimension_entry_1.place(x=195,y=133)
+        dimension_entry_1.place(x=90,y=120)
         dimension_entry_2.place_forget()
 
     else:
@@ -70,17 +70,17 @@ def dimensions():
 
 dimension_1 = tk.StringVar()
 dimension_lbl_1 = tk.Label(root,textvariable=dimension_1)
-dimension_lbl_1.place(x=120, y=133)
-dimension_entry_1 = tk.Entry(root,width=15)
+dimension_lbl_1.place(x=10, y=120)
+dimension_entry_1 = tk.Entry(root,width=25)
 dimension_entry_1.place_forget()
 
 dimension_2 = tk.StringVar()
 dimension_lbl_2 = tk.Label(root,textvariable=dimension_2)
-dimension_lbl_2.place(x=120, y=163)
-dimension_entry_2 = tk.Entry(root,width=15)
+dimension_lbl_2.place(x=10, y=150)
+dimension_entry_2 = tk.Entry(root,width=25)
 dimension_entry_2.place_forget()
 
-tk.Button(root,text="Input Dimensions",command=dimensions).place(x=10,y=130)
+shape_prompt.trace_add("write",dimensions)
 
 # Shape Creation
 def check_values():
@@ -121,7 +121,7 @@ def pyramid(rgb,coord):
         else:
             pyr = SquarePyramid(rgb, coord, b, h)
             output.set(f"{pyr.getType()}\nVolume: {pyr.volume():.2f} units cubed\nSurface Area: {pyr.surface_area():.2f} units squared")
-            output_lbl.place(x=105, y=200)
+            output_lbl.place(x=53,y=235)
             pyr.draw()
     except ValueError:
         output.set("Please check the dimensions!")
@@ -134,7 +134,7 @@ def icosahedron(rgb, coord):
         else:
             ico = Icosahedron(rgb, coord, s)
             output.set(f"{ico.getType()}\nVolume: {ico.volume():.2f} units cubed\nSurface Area: {ico.surface_area():.2f} units squared")
-            output_lbl.place(x=105, y=200)
+            output_lbl.place(x=53,y=235)
             ico.draw()
     except ValueError:
         output.set("Please check the dimensions!")
@@ -142,9 +142,9 @@ def icosahedron(rgb, coord):
 
 output = tk.StringVar()
 output_lbl = tk.Label(root,textvariable=output)
-output_lbl.place(x=105,y=204)
+output_lbl.place(x=61,y=250)
 output.set("")
 
-tk.Button(root,text="Create Shape",command=check_values).place(x=10,y=200)
+tk.Button(root,text="Create Shape",command=check_values).place(x=100,y=200)
 
 root.mainloop()
