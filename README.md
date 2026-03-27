@@ -4,6 +4,7 @@ ISC4U Assignment
 Required Packages:
 - pygame 
 - pyopengl
+- numpy
 
 References:
 - https://www.youtube.com/playlist?list=PLwbVskGxnnVQle9futw-wRfx1HEHvmIij
