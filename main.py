@@ -88,8 +88,9 @@ def check_values():
         r = int(red_entry.get().strip())
         g = int(green_entry.get().strip())
         b = int(blue_entry.get().strip())
-        if r > 255 or r < 0 or g > 255 or g < 0 or b > 255 or b < 0:
-            output.set("Please check the RGB values!")
+        if not all (0 <= rgb <= 255 for rgb in [r,g,b]):
+            output_lbl.place(x=70, y=250)
+            output.set("Invalid RGB values.\n(They should be all 0-255)")
         else:
             rgb = [r,g,b]
             try:
@@ -99,17 +100,19 @@ def check_values():
                 coord = [x,y,z]
                 selected_shape = shape_prompt.get()
                 if selected_shape == "Square-based Pyramid":
-                    pyramid(rgb,coord)
+                    create_pyramid(rgb,coord)
                 elif selected_shape == "Icosahedron":
-                    icosahedron(rgb,coord)
+                    create_icosahedron(rgb,coord)
                 else:
                     output.set("Please choose a 3D shape type!")
             except ValueError:
-                output.set("Please check the location values!")
+                output_lbl.place(x=85, y=250)
+                output.set("Invalid coordinates.")
     except ValueError:
-        output.set("Please check the RGB values!")
+        output_lbl.place(x=88, y=250)
+        output.set("Invalid RGB values.")
 
-def pyramid(rgb,coord):
+def create_pyramid(rgb,coord):
     try:
         b = int(dimension_entry_1.get().strip())
         h = int(dimension_entry_2.get().strip())
@@ -118,20 +121,22 @@ def pyramid(rgb,coord):
         output_lbl.place(x=53,y=235)
         pyr.draw()
     except ValueError:
-        output.set("Please check the dimensions!")
+        output_lbl.place(x=85, y=250)
+        output.set("Invalid dimensions.")
 
-def icosahedron(rgb, coord):
+def create_icosahedron(rgb, coord):
     try:
         s = int(dimension_entry_1.get().strip())
         if not s:
-            output.set("Please check the dimensions!")
+            output.set("Invalid dimensions.")
         else:
             ico = Icosahedron(rgb, coord, s)
             output.set(f"{ico.getType()}\nVolume: {ico.volume():.2f} units cubed\nSurface Area: {ico.surface_area():.2f} units squared")
             output_lbl.place(x=53,y=235)
             ico.draw()
     except ValueError:
-        output.set("Please check the dimensions!")
+        output_lbl.place(x=85, y=250)
+        output.set("Invalid dimensions.")
 
 
 output = tk.StringVar()

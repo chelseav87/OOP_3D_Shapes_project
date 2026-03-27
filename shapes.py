@@ -34,7 +34,7 @@ class SquarePyramid(Shapes3D):
     def surface_area(self):
         return self.__base_length ** 2 + 2 * self.__base_length * (self.__base_length ** 2 / 4 + self.__height ** 2) ** 0.5
 
-    def draw(self):
+    def draw(self, colour):
         vertices = [(0, 0, self.__height),
                     (self.__base_length, self.__base_length, -self.__height),
                     (self.__base_length, -self.__base_length, -self.__height),
@@ -47,7 +47,7 @@ class SquarePyramid(Shapes3D):
                  (0, 4, 1)]  # back side
 
         def draw_pyramid():
-            glColor3f(1, 1, 1)
+            glColor3f(colour[0], colour[1], colour[2])
 
             glBegin(GL_QUADS)
             glNormal3f(0, 0, -1)
