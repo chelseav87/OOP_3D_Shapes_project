@@ -96,17 +96,14 @@ def check_values():
                 x = int(x_entry.get().strip())
                 y = int(y_entry.get().strip())
                 z = int(z_entry.get().strip())
-                if not x or not y or not z:
-                    output.set("Please check the location values!")
+                coord = [x,y,z]
+                selected_shape = shape_prompt.get()
+                if selected_shape == "Square-based Pyramid":
+                    pyramid(rgb,coord)
+                elif selected_shape == "Icosahedron":
+                    icosahedron(rgb,coord)
                 else:
-                    coord = [x,y,z]
-                    selected_shape = shape_prompt.get()
-                    if selected_shape == "Square-based Pyramid":
-                        pyramid(rgb,coord)
-                    elif selected_shape == "Icosahedron":
-                        icosahedron(rgb,coord)
-                    else:
-                        output.set("Please choose a 3D shape type!")
+                    output.set("Please choose a 3D shape type!")
             except ValueError:
                 output.set("Please check the location values!")
     except ValueError:
@@ -116,13 +113,10 @@ def pyramid(rgb,coord):
     try:
         b = int(dimension_entry_1.get().strip())
         h = int(dimension_entry_2.get().strip())
-        if not b or not h:
-            output.set("Please check the dimensions!")
-        else:
-            pyr = SquarePyramid(rgb, coord, b, h)
-            output.set(f"{pyr.getType()}\nVolume: {pyr.volume():.2f} units cubed\nSurface Area: {pyr.surface_area():.2f} units squared")
-            output_lbl.place(x=53,y=235)
-            pyr.draw()
+        pyr = SquarePyramid(rgb, coord, b, h)
+        output.set(f"{pyr.getType()}\nVolume: {pyr.volume():.2f} units cubed\nSurface Area: {pyr.surface_area():.2f} units squared")
+        output_lbl.place(x=53,y=235)
+        pyr.draw()
     except ValueError:
         output.set("Please check the dimensions!")
 
