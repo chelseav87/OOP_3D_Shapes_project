@@ -89,7 +89,7 @@ def check_values():
         g = int(green_entry.get().strip())
         b = int(blue_entry.get().strip())
         if r > 255 or r < 0 or g > 255 or g < 0 or b > 255 or b < 0:
-            output.set("Please check your RGB values!")
+            output.set("Please check the RGB values!")
         else:
             rgb = [r,g,b]
             try:
@@ -97,32 +97,48 @@ def check_values():
                 y = int(y_entry.get().strip())
                 z = int(z_entry.get().strip())
                 if not x or not y or not z:
-                    output.set("Please check your location values!")
+                    output.set("Please check the location values!")
                 else:
-                    location = [x,y,z]
+                    coord = [x,y,z]
                     selected_shape = shape_prompt.get()
                     if selected_shape == "Square-based Pyramid":
-                        pyramid(rgb,location)
+                        pyramid(rgb,coord)
                     elif selected_shape == "Icosahedron":
-                        icosahedron(rgb,location)
+                        icosahedron(rgb,coord)
                     else:
                         output.set("Please choose a 3D shape type!")
             except ValueError:
-                output.set("Please check your location values!")
+                output.set("Please check the location values!")
     except ValueError:
-        output.set("Please check your RGB values!")
+        output.set("Please check the RGB values!")
 
-def pyramid(rgb,location):
-    pyr = SquarePyramid([1, 1, 1], [0, 0, 0], 1, 1)
-    output.set(f"{pyr.getType()}\nVolume: {pyr.volume():.2f} units cubed\nSurface Area: {pyr.surface_area():.2f} units squared")
-    output_lbl.place(x=105,y=200)
-    pyr.draw()
+def pyramid(rgb,coord):
+    try:
+        b = int(dimension_entry_1.get().strip())
+        h = int(dimension_entry_2.get().strip())
+        if not b or not h:
+            output.set("Please check the dimensions!")
+        else:
+            pyr = SquarePyramid(rgb, coord, b, h)
+            output.set(f"{pyr.getType()}\nVolume: {pyr.volume():.2f} units cubed\nSurface Area: {pyr.surface_area():.2f} units squared")
+            output_lbl.place(x=105, y=200)
+            pyr.draw()
+    except ValueError:
+        output.set("Please check the dimensions!")
 
-def icosahedron(rgb, location):
-    ico = Icosahedron([1, 1, 1], [0, 0, 0], 1)
-    output.set(f"{ico.getType()}\nVolume: {ico.volume():.2f} units cubed\nSurface Area: {ico.surface_area():.2f} units squared")
-    output_lbl.place(x=105,y=200)
-    ico.draw()
+def icosahedron(rgb, coord):
+    try:
+        s = int(dimension_entry_1.get().strip())
+        if not s:
+            output.set("Please check the dimensions!")
+        else:
+            ico = Icosahedron(rgb, coord, s)
+            output.set(f"{ico.getType()}\nVolume: {ico.volume():.2f} units cubed\nSurface Area: {ico.surface_area():.2f} units squared")
+            output_lbl.place(x=105, y=200)
+            ico.draw()
+    except ValueError:
+        output.set("Please check the dimensions!")
+
 
 output = tk.StringVar()
 output_lbl = tk.Label(root,textvariable=output)
