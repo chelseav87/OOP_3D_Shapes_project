@@ -22,6 +22,12 @@ class Shapes3D:
     def getType(self):
         return self.__shape_type
 
+    def getColour(self):
+        return self.__shape_colour
+
+    def getLocation(self):
+        return self.__shape_location
+
 class SquarePyramid(Shapes3D):
     def __init__(self, colour, location, base_length, height):
         super().__init__("Square-based Pyramid", colour, location)
@@ -93,7 +99,7 @@ class SquarePyramid(Shapes3D):
             glLightfv(GL_LIGHT0, GL_POSITION, (1, 1, 1, 1))
 
             gluPerspective(55, display[0] / display[1], 1, 10)
-            glTranslatef(0.0, 0.0, -4)
+            glTranslatef(location[0],location[1],-location[2]-4)
             glRotatef(270, 1, 0, 0)
 
             while True:
@@ -157,7 +163,7 @@ class Icosahedron(Shapes3D):
             glLightfv(GL_LIGHT0, GL_POSITION, (1, 1, 0, 1))
 
             gluPerspective(50, display[0] / display[1], 1, 10)
-            glTranslatef(0.0, 0.0, -5)
+            glTranslatef(location[0],location[1],-location[2]-5)
             glRotatef(120, 1, 0, 0)
             glScalef(self.__side_length, self.__side_length, self.__side_length)
 

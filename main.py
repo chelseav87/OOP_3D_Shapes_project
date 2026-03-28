@@ -118,8 +118,12 @@ def create_pyramid(rgb,coord):
         h = float(dimension_entry_2.get().strip())
         pyr = SquarePyramid(rgb, coord, b, h)
         output.set(f"{pyr.getType()}\nVolume: {pyr.volume():.2f} units cubed\nSurface Area: {pyr.surface_area():.2f} units squared")
+        print(f"{pyr.getType()} | "
+              f"RGB {pyr.getColour()[0]}, {pyr.getColour()[1]}, {pyr.getColour()[2]} | "
+              f"Location {pyr.getLocation()[0]}, {pyr.getLocation()[1]}, {pyr.getLocation()[2]} | "
+              f"Volume {pyr.volume():.2f} | Surface Area {pyr.surface_area():.2f}")
         output_lbl.place(x=53,y=235)
-        pyr.draw(rgb)
+        pyr.draw(rgb,coord)
     except ValueError:
         output_lbl.place(x=85, y=250)
         output.set("Invalid dimensions.")
@@ -132,8 +136,12 @@ def create_icosahedron(rgb, coord):
         else:
             ico = Icosahedron(rgb, coord, s)
             output.set(f"{ico.getType()}\nVolume: {ico.volume():.2f} units cubed\nSurface Area: {ico.surface_area():.2f} units squared")
+            print(f"{ico.getType()} | "
+                  f"RGB {ico.getColour()[0]}, {ico.getColour()[1]}, {ico.getColour()[2]} | "
+                  f"Location {ico.getLocation()[0]}, {ico.getLocation()[1]}, {ico.getLocation()[2]} | "
+                  f"Volume {ico.volume():.2f} | Surface Area {ico.surface_area():.2f}")
             output_lbl.place(x=53,y=235)
-            ico.draw(rgb)
+            ico.draw(rgb,coord)
     except ValueError:
         output_lbl.place(x=85, y=250)
         output.set("Invalid dimensions.")
