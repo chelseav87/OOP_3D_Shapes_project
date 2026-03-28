@@ -101,7 +101,7 @@ class SquarePyramid(Shapes3D):
             glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE)
             glLightfv(GL_LIGHT0, GL_POSITION, (1, 1, 1, 1))
 
-            gluPerspective(55, display[0] / display[1], 1, 10)
+            gluPerspective(55, display[0] / display[1], 1, 10000)
             glTranslatef(location[0],location[1],-location[2]-4)
             glRotatef(270, 1, 0, 0)
 
@@ -110,7 +110,7 @@ class SquarePyramid(Shapes3D):
                     if event.type == pygame.QUIT:
                         pygame.quit()
                         return
-                glRotatef(1, 1, 1, 100)
+                glRotatef(1, 1, 1, 10000)
                 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
                 draw_pyramid()
                 pygame.display.flip()
@@ -178,7 +178,7 @@ class Icosahedron(Shapes3D):
                     if event.type == pygame.QUIT:
                         pygame.quit()
                         return
-                glRotatef(1, 1, 1, 100)
+                glRotatef(1, 1, 1, 10000)
                 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
                 draw_icosahedron()
                 pygame.display.flip()
