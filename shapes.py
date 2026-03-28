@@ -16,16 +16,16 @@ class Shapes3D:
     def surface_area(self):
         return None
 
-    def draw(self, colour, location):
+    def draw(self):
         return None
 
-    def getType(self):
+    def get_type(self):
         return self.__shape_type
 
-    def getColour(self):
+    def get_colour(self):
         return self.__shape_colour
 
-    def getLocation(self):
+    def get_location(self):
         return self.__shape_location
 
 class SquarePyramid(Shapes3D):
@@ -40,8 +40,11 @@ class SquarePyramid(Shapes3D):
     def surface_area(self):
         return self.__base_length ** 2 + 2 * self.__base_length * (self.__base_length ** 2 / 4 + self.__height ** 2) ** 0.5
 
-    def draw(self, colour, location):
-        vertices = [(0, 0, self.__height),
+    def draw(self):
+        colour = self.get_colour()
+        location = self.get_location()
+
+        vertices = [(0, 0, self.__height/2),
                     (self.__base_length, self.__base_length, -self.__height),
                     (self.__base_length, -self.__base_length, -self.__height),
                     (-self.__base_length, -self.__base_length, -self.__height),
@@ -125,7 +128,10 @@ class Icosahedron(Shapes3D):
     def surface_area(self):
         return 5 * 3 ** 0.5 * self.__side_length ** 2
 
-    def draw(self, colour, location):
+    def draw(self):
+        colour = self.get_colour()
+        location = self.get_location()
+
         phi = (1 + 5 ** 0.5) / 2
         vertices = [(phi, 0, -1), (phi, 0, 1), (-phi, 0, -1), (-phi, 0, 1),
                     (-1, phi, 0), (1, phi, 0), (-1, -phi, 0), (1, -phi, 0),
@@ -165,7 +171,7 @@ class Icosahedron(Shapes3D):
             gluPerspective(50, display[0] / display[1], 1, 10)
             glTranslatef(location[0],location[1],-location[2]-5)
             glRotatef(120, 1, 0, 0)
-            glScalef(self.__side_length, self.__side_length, self.__side_length)
+            glScalef(self.__side_length/2, self.__side_length/2, self.__side_length/2)
 
             while True:
                 for event in pygame.event.get():

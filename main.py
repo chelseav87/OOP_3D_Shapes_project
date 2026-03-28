@@ -89,7 +89,6 @@ def check_values():
         g = int(green_entry.get().strip())
         b = int(blue_entry.get().strip())
         if not all (0 <= rgb <= 255 for rgb in [r,g,b]):
-            output_lbl.place(x=70, y=250)
             output.set("Invalid RGB values.\n(They should be all 0-255)")
         else:
             rgb = [r,g,b]
@@ -106,50 +105,47 @@ def check_values():
                 else:
                     output.set("Please choose a 3D shape type!")
             except ValueError:
-                output_lbl.place(x=85, y=250)
                 output.set("Invalid coordinates.")
     except ValueError:
-        output_lbl.place(x=88, y=250)
         output.set("Invalid RGB values.")
 
 def create_pyramid(rgb,coord):
     try:
         b = float(dimension_entry_1.get().strip())
         h = float(dimension_entry_2.get().strip())
-        pyr = SquarePyramid(rgb, coord, b, h)
-        output.set(f"{pyr.getType()}\nVolume: {pyr.volume():.2f} units cubed\nSurface Area: {pyr.surface_area():.2f} units squared")
-        print(f"{pyr.getType()} | "
-              f"RGB {pyr.getColour()[0]}, {pyr.getColour()[1]}, {pyr.getColour()[2]} | "
-              f"Location {pyr.getLocation()[0]}, {pyr.getLocation()[1]}, {pyr.getLocation()[2]} | "
-              f"Volume {pyr.volume():.2f} | Surface Area {pyr.surface_area():.2f}")
-        output_lbl.place(x=53,y=235)
-        pyr.draw(rgb,coord)
+        if b <= 0 or h <= 0:
+            output.set("Invalid dimensions.")
+        else:
+            pyr = SquarePyramid(rgb, coord, b, h)
+            output.set(f"{pyr.get_type()}\nVolume: {pyr.volume():.2f} units cubed\nSurface Area: {pyr.surface_area():.2f} units squared")
+            print(f"{pyr.get_type()} | "
+                  f"RGB {pyr.get_colour()[0]}, {pyr.get_colour()[1]}, {pyr.get_colour()[2]} | "
+                  f"Location {pyr.get_location()[0]}, {pyr.get_location()[1]}, {pyr.get_location()[2]} | "
+                  f"Volume {pyr.volume():.2f} | Surface Area {pyr.surface_area():.2f}")
+            pyr.draw()
     except ValueError:
-        output_lbl.place(x=85, y=250)
         output.set("Invalid dimensions.")
 
 def create_icosahedron(rgb, coord):
     try:
         s = float(dimension_entry_1.get().strip())
-        if not s:
+        if s <= 0:
             output.set("Invalid dimensions.")
         else:
             ico = Icosahedron(rgb, coord, s)
-            output.set(f"{ico.getType()}\nVolume: {ico.volume():.2f} units cubed\nSurface Area: {ico.surface_area():.2f} units squared")
-            print(f"{ico.getType()} | "
-                  f"RGB {ico.getColour()[0]}, {ico.getColour()[1]}, {ico.getColour()[2]} | "
-                  f"Location {ico.getLocation()[0]}, {ico.getLocation()[1]}, {ico.getLocation()[2]} | "
+            output.set(f"{ico.get_type()}\nVolume: {ico.volume():.2f} units cubed\nSurface Area: {ico.surface_area():.2f} units squared")
+            print(f"{ico.get_type()} | "
+                  f"RGB {ico.get_colour()[0]}, {ico.get_colour()[1]}, {ico.get_colour()[2]} | "
+                  f"Location {ico.get_location()[0]}, {ico.get_location()[1]}, {ico.get_location()[2]} | "
                   f"Volume {ico.volume():.2f} | Surface Area {ico.surface_area():.2f}")
-            output_lbl.place(x=53,y=235)
-            ico.draw(rgb,coord)
+            ico.draw()
     except ValueError:
-        output_lbl.place(x=85, y=250)
         output.set("Invalid dimensions.")
 
 
 output = tk.StringVar()
 output_lbl = tk.Label(root,textvariable=output)
-output_lbl.place(x=61,y=250)
+output_lbl.place(x=140,y=262, anchor="center")
 output.set("")
 
 tk.Button(root,text="Create Shape",command=check_values).place(x=100,y=200)
